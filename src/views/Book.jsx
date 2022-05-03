@@ -13,30 +13,38 @@ export default function Book() {
   const [value, setValue] = useState('all');
   const [bibleBooks, setBibleBooks] = useState([]);
 
-  const updatedTestHandler = async (e) => {
-    setValue(e.target.value)
-    console.log('value :>> ', value);
-    if (value === 'all') {
-      history.push('/');
-      setOldTest(false)
-      setNewTest(false)
-    }
-    if (value === 'new') {
-      setOldTest(false)
-      setNewTest(true)
-      setTest(bibleBooks.slice(40, 66));
-      console.log('test :>> ', test);
-      history.push('/?select=new');
-    }
-    if (value === 'old') {
-      setOldTest(true)
-      setNewTest(false)
-      setTest(bibleBooks.slice(0, 39));
-      console.log('test :>> ', test);
-      history.push('/?select=old');
-
-    }
-  };
+  console.log('value :>> ', value);
+  useEffect(() => {
+    
+    const updatedTestHandler = () => {
+      // setValue(e.target.value)
+      
+      if (value === 'all') {
+        history.push('/');
+        setOldTest(false)
+        setNewTest(false)
+      }
+      if (value === 'new') {
+        setOldTest(false)
+        setNewTest(true)
+        setTest(bibleBooks.slice(39, 66));
+        console.log('test :>> ', test);
+        history.push('/?select=new');
+      }
+      if (value === 'old') {
+        setOldTest(true)
+        setNewTest(false)
+        setTest(bibleBooks.slice(0, 39));
+        console.log('test :>> ', test);
+        history.push('/?select=old');
+        
+      }
+    };
+    updatedTestHandler();
+  
+    
+  }, [value])
+  
 
   useEffect(() => {
     const getBooksOfBible = async () => {
@@ -56,6 +64,7 @@ export default function Book() {
       setIsLoading(false)
     }
     getBooksOfBible();
+    console.log('hi');
   }, []);
 
   return (
@@ -66,7 +75,7 @@ export default function Book() {
         <div>
           <h2>Books of the Bible</h2>
           <label htmlFor="testament"></label>
-          <select value={value} onChange={updatedTestHandler} id="testament">
+          <select value={value} onChange={(e) => setValue(e.target.value)} id="testament">
             <option value="all">All</option>
             <option value="old">Old Testament</option>
             <option value="new">New Testament</option>
