@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-export default function Book() {
-
+export default function Detail() {
+const { id } = useParams()
+const [item, setItem] = useState('')
 const [isLoading, setIsLoading] = useState(true)
-const [bibleBooks, setBibleBooks] = useState([])
-
 useEffect(() => {
-  const getBooksOfBible = async () => {
+  async function fetchID() {
     const options = {
       method: 'GET',
       headers: {
@@ -16,31 +15,21 @@ useEffect(() => {
       }
     };
     
-    
-    
     const books = await fetch('https://multilingual-bible.p.rapidapi.com/kingjames/bible/english/allbooknames', options)
     const json = await books.json()
     console.log('json', json)
-    setBibleBooks(json)
+    // setBibleBooks(json)
+    setItem(json[id])
     setIsLoading(false)
   }
-  getBooksOfBible();
+  fetchID()
 }, [])
 
   return (
-    <>
-      {isLoading ? <h3>Bible Books are Loading...</h3> :
-      <div>
-
-      <h2>Books of the Bible</h2>
-      { bibleBooks.map((bibleBook, i) => (
-        <Link to={`/bookID/${i}`} key={i}>
-        
-      <p>{bibleBook}</p>
-        </Link>
-        )) }
-        </div>
-       }
-    </>
+    <div>
+      { isLoading ? <h4>Loading Details...</h4> :
+<h4>Hey, {item} here, my Book Number is {Number(id) + 1}</h4>
+      }
+    </div>
   )
 }
