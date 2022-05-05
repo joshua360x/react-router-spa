@@ -1,3 +1,4 @@
+import { BrowserRouter as Router } from 'react-router-dom';
 import Footer from "./views/Footer";
 import Header from "./views/Header";
 import Main from "./views/Main";

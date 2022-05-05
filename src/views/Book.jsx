@@ -36,7 +36,7 @@ export default function Book() {
         setNewTest(true)
         setTest(bibleBooks.slice(39, 66));
         console.log('test :>> ', test);
-        // history.push('/?select=new');
+        history.push('/?select=new');
       }
       if (value === 'old') {
         setOldTest(true)

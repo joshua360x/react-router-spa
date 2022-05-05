@@ -17,7 +17,7 @@ useEffect(() => {
     
     const books = await fetch('https://multilingual-bible.p.rapidapi.com/kingjames/bible/english/allbooknames', options)
     const json = await books.json()
-    console.log('json', json)
+    // console.log('json', json)
     // setBibleBooks(json)
     setItem(json[id])
     setIsLoading(false)
