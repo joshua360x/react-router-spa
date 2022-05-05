@@ -4,6 +4,7 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 // import Header from './views/Header';
@@ -21,7 +22,15 @@ test('renders APP', async () => {
 
   //  await waitFor(() => {
 
-  await screen.findByText(/loading/i);
+  const loadingEL = await screen.findByText(/loading/i);
+  await waitForElementToBeRemoved(loadingEL, {timeout: 3000})
+  const genesis = await screen.findByText(/genesis/i)
+  userEvent.click(genesis)
+  // const loadBookEL = await screen.findByText(/loading book.../i)
+  // await waitForElementToBeRemoved(loadBookEL, {timeout: 3000})
+  await waitFor(() => {
+    screen.getByText(/Genesis/i)}, { timeout: 3000 });
+
   //   expect(findByText(/books/i)).toBeInTheDocument()
   // })
 });
